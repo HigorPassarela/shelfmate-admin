@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { CartProvider } from "@/contexts/CartContext";
 import { PublicLayout } from "@/components/PublicLayout";
 import { AdminLayout } from "@/components/AdminLayout";
 import Index from "./pages/Index";
@@ -15,6 +16,7 @@ import AdminBooks from "./pages/admin/AdminBooks";
 import AdminAuthors from "./pages/admin/AdminAuthors";
 import AdminCustomers from "./pages/admin/AdminCustomers";
 import AdminSales from "./pages/admin/AdminSales";
+import CheckoutPage from "./pages/CheckoutPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +24,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
+      <CartProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -32,6 +35,7 @@ const App = () => (
               <Route path="/livros" element={<BooksPage />} />
               <Route path="/autores" element={<AuthorsPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
             </Route>
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
@@ -44,6 +48,7 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
+      </CartProvider>
     </AuthProvider>
   </QueryClientProvider>
 );

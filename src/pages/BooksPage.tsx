@@ -1,14 +1,19 @@
 import { useState } from 'react';
 import { getBooksWithAuthors } from '@/data/mockData';
 import { GENDER_LABELS, BookGender } from '@/types';
-import { BookOpen, Filter, Search } from 'lucide-react';
+import { BookOpen, Filter, Search, ShoppingCart, Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { useCart } from '@/contexts/CartContext';
+import { useToast } from '@/hooks/use-toast';
 
 const BooksPage = () => {
   const allBooks = getBooksWithAuthors();
   const [search, setSearch] = useState('');
   const [genre, setGenre] = useState<string>('ALL');
+  const { addToCart, items } = useCart();
+  const { toast } = useToast();
 
   const filtered = allBooks.filter(b => {
     const matchSearch = b.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -65,7 +70,19 @@ const BooksPage = () => {
             <p className="text-xs text-muted-foreground mt-1">ISBN: {book.isbn}</p>
             <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
               <span className="text-xl font-bold text-primary">R$ {book.price.toFixed(2)}</span>
-              <span className="text-xs text-muted-foreground">{book.quantity} em estoque</span>
+              {book.book_status === 'IN_STOCK' ? (
+                <Button
+                  size="sm"
+                  className="rounded-full gap-1.5 text-xs"
+                  variant={items.some(i => i.book.id === book.id) ? 'secondary' : 'default'}
+                  onClick={() => { addToCart(book); toast({ title: `"${book.title}" adicionado ao carrinho` }); }}
+                >
+                  {items.some(i => i.book.id === book.id) ? <Check className="h-3 w-3" /> : <ShoppingCart className="h-3 w-3" />}
+                  {items.some(i => i.book.id === book.id) ? 'No carrinho' : 'Adicionar'}
+                </Button>
+              ) : (
+                <span className="text-xs text-muted-foreground">Indisponível</span>
+              )}
             </div>
           </div>
         ))}
