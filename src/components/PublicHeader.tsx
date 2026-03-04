@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { BookOpen, User, LogOut, Menu } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
+import { CartDrawer } from '@/components/CartDrawer';
 import { useState } from 'react';
 
 export function PublicHeader() {
@@ -42,6 +43,7 @@ export function PublicHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <CartDrawer />
           {user ? (
             <div className="flex items-center gap-2">
               {isAdmin && (
