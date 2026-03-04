@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,82 +6,52 @@
 
 @layer base {
   :root {
-    --background: 45 30% 98%;
-    --foreground: 160 10% 18%;
+    --background: 220 15% 8%;
+    --foreground: 40 15% 90%;
 
-    --card: 45 40% 96%;
-    --card-foreground: 160 10% 18%;
+    --card: 220 14% 11%;
+    --card-foreground: 40 15% 90%;
 
-    --popover: 45 30% 98%;
-    --popover-foreground: 160 10% 18%;
+    --popover: 220 14% 11%;
+    --popover-foreground: 40 15% 90%;
 
-    --primary: 155 30% 32%;
-    --primary-foreground: 45 40% 97%;
+    --primary: 42 70% 55%;
+    --primary-foreground: 220 15% 6%;
 
-    --secondary: 45 25% 92%;
-    --secondary-foreground: 160 10% 18%;
+    --secondary: 220 12% 16%;
+    --secondary-foreground: 40 15% 85%;
 
-    --muted: 45 15% 93%;
-    --muted-foreground: 160 8% 50%;
+    --muted: 220 10% 15%;
+    --muted-foreground: 220 8% 55%;
 
-    --accent: 38 65% 55%;
-    --accent-foreground: 160 10% 12%;
+    --accent: 42 70% 55%;
+    --accent-foreground: 220 15% 6%;
 
-    --destructive: 0 65% 52%;
+    --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 45 18% 88%;
-    --input: 45 18% 88%;
-    --ring: 155 30% 32%;
+    --border: 220 10% 18%;
+    --input: 220 10% 18%;
+    --ring: 42 70% 55%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 155 22% 18%;
-    --sidebar-foreground: 45 25% 92%;
-    --sidebar-primary: 38 65% 58%;
-    --sidebar-primary-foreground: 155 22% 12%;
-    --sidebar-accent: 155 18% 24%;
-    --sidebar-accent-foreground: 45 25% 92%;
-    --sidebar-border: 155 15% 25%;
-    --sidebar-ring: 38 65% 58%;
+    --sidebar-background: 220 18% 6%;
+    --sidebar-foreground: 40 12% 80%;
+    --sidebar-primary: 42 70% 58%;
+    --sidebar-primary-foreground: 220 18% 6%;
+    --sidebar-accent: 220 14% 14%;
+    --sidebar-accent-foreground: 40 12% 90%;
+    --sidebar-border: 220 12% 14%;
+    --sidebar-ring: 42 70% 55%;
 
     --success: 152 55% 42%;
     --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
-    --warning-foreground: 160 10% 12%;
+    --warning-foreground: 220 15% 8%;
 
-    --font-display: 'Libre Baskerville', Georgia, serif;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body: 'Inter', system-ui, sans-serif;
-  }
-
-  .dark {
-    --background: 155 15% 8%;
-    --foreground: 45 20% 92%;
-    --card: 155 15% 12%;
-    --card-foreground: 45 20% 92%;
-    --popover: 155 15% 12%;
-    --popover-foreground: 45 20% 92%;
-    --primary: 38 65% 58%;
-    --primary-foreground: 155 15% 8%;
-    --secondary: 155 15% 16%;
-    --secondary-foreground: 45 20% 92%;
-    --muted: 155 12% 16%;
-    --muted-foreground: 45 10% 60%;
-    --accent: 38 65% 50%;
-    --accent-foreground: 155 15% 8%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 155 12% 20%;
-    --input: 155 12% 20%;
-    --ring: 38 65% 58%;
-    --sidebar-background: 155 15% 6%;
-    --sidebar-foreground: 45 20% 92%;
-    --sidebar-primary: 38 65% 58%;
-    --sidebar-primary-foreground: 155 15% 6%;
-    --sidebar-accent: 155 12% 12%;
-    --sidebar-accent-foreground: 45 20% 92%;
-    --sidebar-border: 155 12% 12%;
-    --sidebar-ring: 38 65% 58%;
   }
 }
 
@@ -102,16 +72,16 @@
   .badge-success {
     @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
     background-color: hsl(var(--success) / 0.15);
-    color: hsl(152, 55%, 32%);
+    color: hsl(152, 55%, 55%);
   }
   .badge-warning {
     @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
     background-color: hsl(var(--warning) / 0.15);
-    color: hsl(38, 70%, 38%);
+    color: hsl(38, 70%, 60%);
   }
   .badge-danger {
     @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
     background-color: hsl(var(--destructive) / 0.12);
-    color: hsl(0, 65%, 45%);
+    color: hsl(0, 62%, 60%);
   }
 }
