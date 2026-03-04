@@ -20,20 +20,15 @@ const BooksPage = () => {
   return (
     <div className="container py-12 animate-fade-in">
       <div className="mb-10">
-        <span className="text-sm font-semibold text-accent uppercase tracking-wider">Catálogo</span>
-        <h1 className="font-display text-4xl font-bold mt-1">Nosso Acervo</h1>
+        <span className="text-sm font-semibold text-primary uppercase tracking-widest">Catálogo</span>
+        <h1 className="font-display text-4xl font-bold mt-1 text-foreground">Nosso Acervo</h1>
         <p className="text-muted-foreground mt-2">Explore nossa coleção com os melhores títulos</p>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-10">
         <div className="relative sm:max-w-sm flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Buscar por título ou autor..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="pl-9 rounded-xl h-11"
-          />
+          <Input placeholder="Buscar por título ou autor..." value={search} onChange={e => setSearch(e.target.value)} className="pl-9 rounded-xl h-11" />
         </div>
         <Select value={genre} onValueChange={setGenre}>
           <SelectTrigger className="sm:w-52 rounded-xl h-11">
@@ -49,14 +44,14 @@ const BooksPage = () => {
         </Select>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filtered.map(book => (
-          <div key={book.id} className="group rounded-2xl border bg-card p-5 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:border-primary/20">
-            <div className="aspect-[3/4] rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 mb-5 flex items-center justify-center">
-              <BookOpen className="h-14 w-14 text-primary/30 group-hover:scale-110 transition-transform duration-300" />
+          <div key={book.id} className="group rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 hover:border-primary/30">
+            <div className="aspect-[3/4] rounded-xl bg-gradient-to-br from-primary/8 to-primary/3 mb-5 flex items-center justify-center">
+              <BookOpen className="h-14 w-14 text-primary/20 group-hover:scale-110 transition-transform duration-300" />
             </div>
             <div className="flex items-center gap-2 mb-2 flex-wrap">
-              <span className="text-[10px] font-semibold uppercase tracking-wider bg-accent/15 text-accent-foreground rounded-full px-2.5 py-0.5">
+              <span className="text-[10px] font-semibold uppercase tracking-wider bg-primary/15 text-primary rounded-full px-2.5 py-0.5">
                 {GENDER_LABELS[book.gender]}
               </span>
               {book.book_status === 'OUT_OF_STOCK' ? (
@@ -65,10 +60,10 @@ const BooksPage = () => {
                 <span className="badge-success">Disponível</span>
               )}
             </div>
-            <h3 className="font-display text-lg font-bold leading-snug line-clamp-2">{book.title}</h3>
+            <h3 className="font-display text-xl font-bold leading-snug line-clamp-2 text-foreground">{book.title}</h3>
             <p className="text-sm text-muted-foreground mt-1">{book.author?.name}</p>
             <p className="text-xs text-muted-foreground mt-1">ISBN: {book.isbn}</p>
-            <div className="flex items-center justify-between mt-4 pt-4 border-t">
+            <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
               <span className="text-xl font-bold text-primary">R$ {book.price.toFixed(2)}</span>
               <span className="text-xs text-muted-foreground">{book.quantity} em estoque</span>
             </div>
