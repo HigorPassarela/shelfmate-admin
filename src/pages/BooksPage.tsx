@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
 import { booksApi, BookResponse } from '@/services/api';
+import { BookCover } from '@/components/BookCover';
 
 // Função para converter BookResponse da API para o formato esperado pelo frontend
 const convertBookResponseToBook = (bookResponse: BookResponse) => ({
@@ -131,9 +132,14 @@ const BooksPage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filtered.map(book => (
           <div key={book.id} className="group rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 hover:border-primary/30">
-            <div className="aspect-[3/4] rounded-xl bg-gradient-to-br from-primary/8 to-primary/3 mb-5 flex items-center justify-center">
-              <BookOpen className="h-14 w-14 text-primary/20 group-hover:scale-110 transition-transform duration-300" />
-            </div>
+            {/* 🔄 AQUI ESTÁ A MUDANÇA - Substitua a div antiga pela BookCover */}
+            <BookCover 
+              isbn={book.isbn}
+              title={book.title}
+              author={book.author?.name || ''}
+              className="aspect-[3/4] rounded-xl mb-5 group-hover:scale-110 transition-transform duration-300"
+            />
+            
             <div className="flex items-center gap-2 mb-2 flex-wrap">
               <span className="text-[10px] font-semibold uppercase tracking-wider bg-primary/15 text-primary rounded-full px-2.5 py-0.5">
                 {GENDER_LABELS[book.gender] || book.gender}

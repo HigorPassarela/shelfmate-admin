@@ -16,9 +16,9 @@ export function PublicLayout() {
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                 <BookOpen className="h-4 w-4 text-primary-foreground" />
               </div>
-              <span className="font-display text-sm font-bold text-foreground">Livraria Nova Era</span>
+              <span className="font-display text-sm font-bold text-foreground">Livaria ExtraLibrary</span>
             </div>
-            <p className="text-sm text-muted-foreground">© 2025 Livraria Nova Era. Todos os direitos reservados.</p>
+            <p className="text-sm text-muted-foreground">© 2025 Livraria ExtraLibrary. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>

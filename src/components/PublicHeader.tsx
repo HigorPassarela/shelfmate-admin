@@ -23,7 +23,7 @@ export function PublicHeader() {
           <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
             <BookOpen className="h-5 w-5 text-primary-foreground" />
           </div>
-          <span className="font-display text-lg font-bold text-foreground">Nova Era</span>
+          <span className="font-display text-lg font-bold text-foreground">ExtraLibrary</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
@@ -69,7 +69,7 @@ export function PublicHeader() {
           ) : (
             <Link to="/login">
               <Button size="sm" className="rounded-full gap-2 px-5">
-                <User className="h-4 w-4" /> Entrar lindo
+                <User className="h-4 w-4" /> Entrar
               </Button>
             </Link>
           )}
