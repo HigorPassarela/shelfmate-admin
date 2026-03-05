@@ -20,7 +20,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   if (user) {
-    navigate(user.role === 'admin' ? '/admin' : '/');
+    navigate(user.role === 'admin' ? '/admin' : user.role === 'librarian' ? '/bibliotecario' : '/');
   }
 
   const handleSubmit = (e: React.FormEvent) => {
