@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { GENDER_LABELS, BookGender } from '@/types';
-import { BookOpen, MapPin, Calendar } from 'lucide-react';
+import { BookOpen, MapPin, Calendar, Search, Filter } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { authorsApi, AuthorResponse } from '@/services/api';
@@ -17,23 +19,25 @@ const convertAuthorResponseToAuthor = (authorResponse: AuthorResponse) => ({
 });
 
 const AuthorsPage = () => {
-  const [authors, setAuthors] = useState([]);
+  const [allAuthors, setAllAuthors] = useState([]); // Todos os autores carregados
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
+  const [nationality, setNationality] = useState<string>('ALL');
   const { toast } = useToast();
 
-  // Carregar autores da API
-  const loadAuthors = async () => {
+  // Carregar todos os autores da API uma única vez
+  const loadAllAuthors = async () => {
     try {
       setLoading(true);
       setError(null);
-      console.log('Carregando autores da API...');
+      console.log('Carregando todos os autores da API...');
       
       const authorResponses = await authorsApi.getAllAuthors();
       console.log('Autores recebidos:', authorResponses);
       
       const convertedAuthors = authorResponses.map(convertAuthorResponseToAuthor);
-      setAuthors(convertedAuthors);
+      setAllAuthors(convertedAuthors);
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro desconhecido');
@@ -45,8 +49,22 @@ const AuthorsPage = () => {
 
   // Carregar dados quando o componente montar
   useEffect(() => {
-    loadAuthors();
+    loadAllAuthors();
   }, []);
+
+  // Filtrar autores localmente com base na busca e nacionalidade
+  const filteredAuthors = allAuthors.filter(author => {
+    const matchesSearch = search === '' || 
+      author.name.toLowerCase().includes(search.toLowerCase());
+    
+    const matchesNationality = nationality === 'ALL' || 
+      author.nacionality === nationality;
+    
+    return matchesSearch && matchesNationality;
+  });
+
+  // Obter nacionalidades únicas dos autores carregados
+  const uniqueNationalities = [...new Set(allAuthors.map(author => author.nacionality).filter(Boolean))];
 
   // Se estiver carregando
   if (loading) {
@@ -68,7 +86,7 @@ const AuthorsPage = () => {
           <BookOpen className="h-16 w-16 mx-auto mb-4 opacity-30 text-destructive" />
           <h2 className="text-2xl font-bold text-destructive mb-4">Erro ao carregar autores</h2>
           <p className="text-muted-foreground mb-6">{error}</p>
-          <Button onClick={loadAuthors} variant="outline">
+          <Button onClick={loadAllAuthors} variant="outline">
             Tentar novamente
           </Button>
         </div>
@@ -81,11 +99,36 @@ const AuthorsPage = () => {
       <div className="mb-10">
         <span className="text-sm font-semibold text-primary uppercase tracking-widest">Escritores</span>
         <h1 className="font-display text-4xl font-bold mt-1 text-foreground">Nossos Autores</h1>
-        <p className="text-muted-foreground mt-2">Conheça os autores que fazem parte do nosso acervo ({authors.length} autores)</p>
+        <p className="text-muted-foreground mt-2">Conheça os autores que fazem parte do nosso acervo ({filteredAuthors.length} autores)</p>
+      </div>
+
+      {/* Filtros de Busca - igual à página de livros */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-10">
+        <div className="relative sm:max-w-sm flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input 
+            placeholder="Buscar por nome do autor..." 
+            value={search} 
+            onChange={e => setSearch(e.target.value)} 
+            className="pl-9 rounded-xl h-11" 
+          />
+        </div>
+        <Select value={nationality} onValueChange={setNationality}>
+          <SelectTrigger className="sm:w-52 rounded-xl h-11">
+            <Filter className="h-4 w-4 mr-2" />
+            <SelectValue placeholder="Nacionalidade" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="ALL">Todas as Nacionalidades</SelectItem>
+            {uniqueNationalities.sort().map((nat) => (
+              <SelectItem key={nat} value={nat!}>{nat}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="grid gap-6">
-        {authors.map(author => {
+        {filteredAuthors.map(author => {
           const books = author.books || [];
           return (
             <div key={author.id} className="rounded-2xl border border-border bg-card p-6 md:p-8 transition-all hover:border-primary/20">
@@ -140,11 +183,11 @@ const AuthorsPage = () => {
         })}
       </div>
 
-      {authors.length === 0 && !loading && (
+      {filteredAuthors.length === 0 && !loading && (
         <div className="text-center py-20 text-muted-foreground">
           <BookOpen className="h-16 w-16 mx-auto mb-4 opacity-30" />
           <p className="text-lg">Nenhum autor encontrado.</p>
-          <p className="text-sm mt-1">Verifique se há autores cadastrados no sistema.</p>
+          <p className="text-sm mt-1">Tente ajustar sua busca ou filtros.</p>
         </div>
       )}
     </div>
