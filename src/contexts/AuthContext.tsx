@@ -1,8 +1,11 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-interface User {
+export interface User {
   email: string;
   name: string;
+  phone?: string;
+  cpf?: string;
+  address?: string;
   role: 'customer' | 'admin';
 }
 
@@ -10,6 +13,7 @@ interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => boolean;
   logout: () => void;
+  updateProfile: (data: Partial<User>) => void;
   isAdmin: boolean;
 }
 
@@ -19,7 +23,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   const login = (email: string, password: string): boolean => {
-    // Mock login
     if (email === 'admin@livraria.com' && password === 'admin123') {
       setUser({ email, name: 'Administrador', role: 'admin' });
       return true;
@@ -33,8 +36,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => setUser(null);
 
+  const updateProfile = (data: Partial<User>) => {
+    setUser(prev => prev ? { ...prev, ...data } : null);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAdmin: user?.role === 'admin' }}>
+    <AuthContext.Provider value={{ user, login, logout, updateProfile, isAdmin: user?.role === 'admin' }}>
       {children}
     </AuthContext.Provider>
   );

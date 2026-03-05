@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { BookOpen, User, LogOut, Menu } from 'lucide-react';
+import { BookOpen, User, LogOut, Menu, Settings } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { CartDrawer } from '@/components/CartDrawer';
@@ -51,6 +51,16 @@ export function PublicHeader() {
                   <Button variant="outline" size="sm" className="rounded-full text-xs">Painel Admin</Button>
                 </Link>
               )}
+              <Link to="/perfil">
+                <Button variant="ghost" size="icon" className="rounded-full" title="Perfil">
+                  <User className="h-4 w-4" />
+                </Button>
+              </Link>
+              <Link to="/configuracoes">
+                <Button variant="ghost" size="icon" className="rounded-full" title="Configurações">
+                  <Settings className="h-4 w-4" />
+                </Button>
+              </Link>
               <span className="text-sm text-muted-foreground hidden sm:inline px-2">{user.name}</span>
               <button onClick={logout} className="text-muted-foreground hover:text-destructive p-2 rounded-full hover:bg-destructive/10 transition-colors">
                 <LogOut className="h-4 w-4" />

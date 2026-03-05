@@ -5,12 +5,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import { PublicLayout } from "@/components/PublicLayout";
 import { AdminLayout } from "@/components/AdminLayout";
 import Index from "./pages/Index";
 import BooksPage from "./pages/BooksPage";
 import AuthorsPage from "./pages/AuthorsPage";
 import LoginPage from "./pages/LoginPage";
+import ProfilePage from "./pages/ProfilePage";
+import SettingsPage from "./pages/SettingsPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminBooks from "./pages/admin/AdminBooks";
 import AdminAuthors from "./pages/admin/AdminAuthors";
@@ -23,6 +26,7 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    <ThemeProvider>
     <AuthProvider>
       <CartProvider>
       <TooltipProvider>
@@ -36,6 +40,8 @@ const App = () => (
               <Route path="/autores" element={<AuthorsPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/perfil" element={<ProfilePage />} />
+              <Route path="/configuracoes" element={<SettingsPage />} />
             </Route>
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
@@ -50,6 +56,7 @@ const App = () => (
       </TooltipProvider>
       </CartProvider>
     </AuthProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
