@@ -6,7 +6,7 @@ export interface User {
   phone?: string;
   cpf?: string;
   address?: string;
-  role: 'customer' | 'admin';
+  role: 'customer' | 'admin' | 'librarian';
 }
 
 interface AuthContextType {
