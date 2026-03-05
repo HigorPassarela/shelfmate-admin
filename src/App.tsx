@@ -8,6 +8,7 @@ import { CartProvider } from "@/contexts/CartContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { PublicLayout } from "@/components/PublicLayout";
 import { AdminLayout } from "@/components/AdminLayout";
+import { LibrarianLayout } from "@/components/LibrarianLayout";
 import Index from "./pages/Index";
 import BooksPage from "./pages/BooksPage";
 import AuthorsPage from "./pages/AuthorsPage";
@@ -19,6 +20,8 @@ import AdminBooks from "./pages/admin/AdminBooks";
 import AdminAuthors from "./pages/admin/AdminAuthors";
 import AdminCustomers from "./pages/admin/AdminCustomers";
 import AdminSales from "./pages/admin/AdminSales";
+import LibrarianBooks from "./pages/librarian/LibrarianBooks";
+import LibrarianAuthors from "./pages/librarian/LibrarianAuthors";
 import CheckoutPage from "./pages/CheckoutPage";
 import NotFound from "./pages/NotFound";
 
@@ -49,6 +52,11 @@ const App = () => (
               <Route path="autores" element={<AdminAuthors />} />
               <Route path="clientes" element={<AdminCustomers />} />
               <Route path="vendas" element={<AdminSales />} />
+            </Route>
+            <Route path="/bibliotecario" element={<LibrarianLayout />}>
+              <Route index element={<LibrarianBooks />} />
+              <Route path="livros" element={<LibrarianBooks />} />
+              <Route path="autores" element={<LibrarianAuthors />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

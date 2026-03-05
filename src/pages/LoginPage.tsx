@@ -20,7 +20,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   if (user) {
-    navigate(user.role === 'admin' ? '/admin' : '/');
+    navigate(user.role === 'admin' ? '/admin' : user.role === 'librarian' ? '/bibliotecario' : '/');
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -41,7 +41,9 @@ const LoginPage = () => {
     } else {
       const success = login(email, password);
       if (success) {
-        navigate(email === 'admin@livraria.com' ? '/admin' : '/');
+        if (email === 'admin@livraria.com') navigate('/admin');
+        else if (email === 'bibliotecario@livraria.com') navigate('/bibliotecario');
+        else navigate('/');
       } else {
         setError('Email ou senha inválidos.');
       }
@@ -129,6 +131,7 @@ const LoginPage = () => {
           {!isRegister && (
             <div className="rounded-xl bg-muted p-4 text-center text-xs text-muted-foreground space-y-1">
               <p><strong className="text-foreground">Admin:</strong> admin@livraria.com / admin123</p>
+              <p><strong className="text-foreground">Bibliotecário:</strong> bibliotecario@livraria.com / lib123</p>
               <p><strong className="text-foreground">Cliente:</strong> qualquer email / 123456</p>
             </div>
           )}

@@ -6,7 +6,7 @@ export interface User {
   phone?: string;
   cpf?: string;
   address?: string;
-  role: 'customer' | 'admin';
+  role: 'customer' | 'admin' | 'librarian';
 }
 
 interface AuthContextType {
@@ -16,6 +16,7 @@ interface AuthContextType {
   logout: () => void;
   updateProfile: (data: Partial<User>) => void;
   isAdmin: boolean;
+  isLibrarian: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -30,6 +31,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Admin mock
     if (email === 'admin@livraria.com' && password === 'admin123') {
       setUser({ email, name: 'Administrador', role: 'admin' });
+      return true;
+    }
+    // Librarian mock
+    if (email === 'bibliotecario@livraria.com' && password === 'lib123') {
+      setUser({ email, name: 'Bibliotecário', role: 'librarian' });
       return true;
     }
     // Check registered users first
@@ -74,7 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, updateProfile, isAdmin: user?.role === 'admin' }}>
+    <AuthContext.Provider value={{ user, login, register, logout, updateProfile, isAdmin: user?.role === 'admin', isLibrarian: user?.role === 'librarian' }}>
       {children}
     </AuthContext.Provider>
   );
