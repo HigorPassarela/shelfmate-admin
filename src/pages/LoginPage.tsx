@@ -131,6 +131,7 @@ const LoginPage = () => {
           {!isRegister && (
             <div className="rounded-xl bg-muted p-4 text-center text-xs text-muted-foreground space-y-1">
               <p><strong className="text-foreground">Admin:</strong> admin@livraria.com / admin123</p>
+              <p><strong className="text-foreground">Bibliotecário:</strong> bibliotecario@livraria.com / lib123</p>
               <p><strong className="text-foreground">Cliente:</strong> qualquer email / 123456</p>
             </div>
           )}
