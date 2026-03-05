@@ -1,6 +1,6 @@
 import { Author, Book, Customer, Sold, SoldBookQuantity } from '@/types';
 
-export const authors: Author[] = [
+export let authors: Author[] = [
   { id: 'a1', name: 'Machado de Assis', biography: 'Considerado o maior escritor brasileiro, autor de Dom Casmurro e Memórias Póstumas de Brás Cubas.', nacionality: 'Brasileiro', birth_date: '1839-06-21' },
   { id: 'a2', name: 'Clarice Lispector', biography: 'Uma das escritoras mais importantes da literatura brasileira, conhecida por sua prosa introspectiva.', nacionality: 'Brasileira', birth_date: '1920-12-10' },
   { id: 'a3', name: 'Jorge Amado', biography: 'Escritor baiano, autor de Gabriela, Cravo e Canela e Capitães da Areia.', nacionality: 'Brasileiro', birth_date: '1912-08-10' },
@@ -8,7 +8,7 @@ export const authors: Author[] = [
   { id: 'a5', name: 'José Saramago', biography: 'Escritor português, Nobel de Literatura, autor de Ensaio sobre a Cegueira.', nacionality: 'Português', birth_date: '1922-11-16' },
 ];
 
-export const books: Book[] = [
+export let books: Book[] = [
   { id: 'b1', isbn: '978-85-359-0277-1', title: 'Dom Casmurro', publication_date: '1899-01-01', gender: 'CLASSIC', price: 34.90, quantity: 25, book_status: 'IN_STOCK', author_id: 'a1' },
   { id: 'b2', isbn: '978-85-359-0278-8', title: 'Memórias Póstumas de Brás Cubas', publication_date: '1881-01-01', gender: 'CLASSIC', price: 29.90, quantity: 18, book_status: 'IN_STOCK', author_id: 'a1' },
   { id: 'b3', isbn: '978-85-325-2536-4', title: 'A Hora da Estrela', publication_date: '1977-01-01', gender: 'FICTION', price: 39.90, quantity: 12, book_status: 'IN_STOCK', author_id: 'a2' },
@@ -57,6 +57,31 @@ export const soldBookQuantities: SoldBookQuantity[] = [
   { sold_id: 8, book_id: 'b9', quantity: 1 },
   { sold_id: 8, book_id: 'b10', quantity: 1 },
 ];
+
+// Mutation helpers
+let nextAuthorId = 6;
+let nextBookId = 11;
+
+export function addAuthor(data: Omit<Author, 'id'>): Author {
+  const author: Author = { ...data, id: `a${nextAuthorId++}` };
+  authors = [...authors, author];
+  return author;
+}
+
+export function removeAuthor(id: string) {
+  books = books.filter(b => b.author_id !== id);
+  authors = authors.filter(a => a.id !== id);
+}
+
+export function addBook(data: Omit<Book, 'id'>): Book {
+  const book: Book = { ...data, id: `b${nextBookId++}` };
+  books = [...books, book];
+  return book;
+}
+
+export function removeBook(id: string) {
+  books = books.filter(b => b.id !== id);
+}
 
 // Helper to get enriched data
 export function getBooksWithAuthors(): Book[] {
