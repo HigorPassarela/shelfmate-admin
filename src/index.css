@@ -142,3 +142,16 @@
     color: hsl(0, 62%, 60%);
   }
 }
+
+/* Font size scaling */
+.font-normal { font-size: 100%; }
+.font-large { font-size: 112.5%; }
+.font-extra-large { font-size: 125%; }
+
+/* Reduced motion */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  transition-duration: 0.001ms !important;
+}
