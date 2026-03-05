@@ -106,10 +106,11 @@ export default function ProfilePage() {
                 <Input
                   id="cpf"
                   value={form.cpf}
-                  onChange={e => handleChange('cpf', e.target.value)}
-                  placeholder="000.000.000-00"
-                  className="bg-secondary/50 border-border/50"
+                  disabled
+                  placeholder="Não informado"
+                  className="bg-secondary/30 border-border/50 opacity-60 cursor-not-allowed"
                 />
+                <p className="text-xs text-muted-foreground">O CPF não pode ser alterado.</p>
               </div>
             </div>
 
