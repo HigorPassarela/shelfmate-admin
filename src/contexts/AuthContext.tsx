@@ -16,6 +16,7 @@ interface AuthContextType {
   logout: () => void;
   updateProfile: (data: Partial<User>) => void;
   isAdmin: boolean;
+  isLibrarian: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
