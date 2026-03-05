@@ -53,6 +53,11 @@ const App = () => (
               <Route path="clientes" element={<AdminCustomers />} />
               <Route path="vendas" element={<AdminSales />} />
             </Route>
+            <Route path="/bibliotecario" element={<LibrarianLayout />}>
+              <Route index element={<LibrarianBooks />} />
+              <Route path="livros" element={<LibrarianBooks />} />
+              <Route path="autores" element={<LibrarianAuthors />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
