@@ -20,6 +20,8 @@ import AdminBooks from "./pages/admin/AdminBooks";
 import AdminAuthors from "./pages/admin/AdminAuthors";
 import AdminCustomers from "./pages/admin/AdminCustomers";
 import AdminSales from "./pages/admin/AdminSales";
+import LibrarianBooks from "./pages/librarian/LibrarianBooks";
+import LibrarianAuthors from "./pages/librarian/LibrarianAuthors";
 import CheckoutPage from "./pages/CheckoutPage";
 import NotFound from "./pages/NotFound";
 
