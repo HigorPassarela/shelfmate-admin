@@ -33,6 +33,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser({ email, name: 'Administrador', role: 'admin' });
       return true;
     }
+    // Librarian mock
+    if (email === 'bibliotecario@livraria.com' && password === 'lib123') {
+      setUser({ email, name: 'Bibliotecário', role: 'librarian' });
+      return true;
+    }
     // Check registered users first
     const registered = registeredUsers.get(email);
     if (registered && registered.password === password) {
