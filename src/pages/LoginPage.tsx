@@ -24,6 +24,15 @@ const LoginPage = () => {
   }
 
   const handleSubmit = (e: React.FormEvent) => {
+    // e.preventDefault();
+    // alert("Hello world");
+    // fetch('http://localhost:8081/api/v1/book')
+    // .then(response => response.json())
+    // .then(data => {
+
+    //   console.log("GET BOOKS: \n");
+    //   console.log(data);
+    // });
     e.preventDefault();
     setError('');
 
@@ -115,7 +124,7 @@ const LoginPage = () => {
           )}
 
           <Button type="submit" className="w-full rounded-xl h-11 font-semibold" size="lg">
-            {isRegister ? 'Criar Conta' : 'Entrar'}
+            {isRegister ? 'Criar Conta' : 'Entrar!!!!!!!'}
           </Button>
 
           <div className="text-center">

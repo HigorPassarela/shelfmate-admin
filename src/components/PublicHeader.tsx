@@ -69,7 +69,7 @@ export function PublicHeader() {
           ) : (
             <Link to="/login">
               <Button size="sm" className="rounded-full gap-2 px-5">
-                <User className="h-4 w-4" /> Entrar
+                <User className="h-4 w-4" /> Entrar lindo
               </Button>
             </Link>
           )}
