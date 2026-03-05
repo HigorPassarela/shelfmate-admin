@@ -41,7 +41,9 @@ const LoginPage = () => {
     } else {
       const success = login(email, password);
       if (success) {
-        navigate(email === 'admin@livraria.com' ? '/admin' : '/');
+        if (email === 'admin@livraria.com') navigate('/admin');
+        else if (email === 'bibliotecario@livraria.com') navigate('/bibliotecario');
+        else navigate('/');
       } else {
         setError('Email ou senha inválidos.');
       }
