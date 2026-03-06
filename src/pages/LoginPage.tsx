@@ -84,7 +84,7 @@ const LoginPage = () => {
         if (success) {
           toast({
             title: "Conta criada com sucesso!",
-            description: "Bem-vindo à Livraria Nova Era!"
+            description: "Bem-vindo à Livraria ExtraLibrary!"
           });
           navigate('/');
         } else {
@@ -122,7 +122,7 @@ const LoginPage = () => {
             {isRegister ? 'Criar Conta' : 'Bem-vindo de volta'}
           </h1>
           <p className="text-muted-foreground mt-2">
-            {isRegister ? 'Preencha seus dados para se registrar' : 'Entre na sua conta da Livraria Nova Era'}
+            {isRegister ? 'Preencha seus dados para se registrar' : 'Entre na sua conta da Livraria ExtraLibrary'}
           </p>
         </div>
 
