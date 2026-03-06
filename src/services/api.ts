@@ -1,5 +1,44 @@
 // src/services/api.ts
-const API_BASE_URL = 'http://localhost:8081/api/v1';
+const API_BASE_URL = 'https://extralibrary-dev.up.railway.app/api/v1';
+
+// Adicionar interface para erros da API
+export interface ApiError {
+  message: string;
+  status?: number;
+  code?: string;
+}
+
+// Função helper para tratamento de erros
+const handleApiError = (error: unknown, context: string): never => {
+  if (error instanceof Error) {
+    throw new Error(`${context}: ${error.message}`);
+  }
+  throw new Error(`${context}: Erro desconhecido`);
+};
+
+// Função helper para fazer requisições
+const apiRequest = async <T>(endpoint: string, options?: RequestInit): Promise<T> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers,
+      },
+      ...options,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro HTTP: ${response.status} - ${response.statusText}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error('Erro de conexão com a API');
+    }
+    throw error;
+  }
+};
 
 export interface BookResponse {
   id: string;
@@ -25,83 +64,29 @@ export interface AuthorResponse {
 }
 
 export const booksApi = {
-  getAllBooks: async (): Promise<BookResponse[]> => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/book`);
-      if (!response.ok) {
-        throw new Error(`Erro HTTP: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Erro ao buscar livros:', error);
-      throw new Error('Erro ao conectar com a API');
-    }
-  },
+  getAllBooks: (): Promise<BookResponse[]> => 
+    apiRequest<BookResponse[]>('/book'),
 
-  searchByTitle: async (title: string): Promise<BookResponse[]> => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/book/search/title?title=${encodeURIComponent(title)}`);
-      if (!response.ok) {
-        throw new Error(`Erro HTTP: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Erro ao buscar livros por título:', error);
-      throw new Error('Erro ao buscar livros por título');
-    }
-  },
+  searchByTitle: (title: string): Promise<BookResponse[]> => 
+    apiRequest<BookResponse[]>(`/book/search/title?title=${encodeURIComponent(title)}`),
 
-  getBooksByGenre: async (genre: string): Promise<BookResponse[]> => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/book/search/genre/${encodeURIComponent(genre)}`);
-      if (!response.ok) {
-        throw new Error(`Erro HTTP: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Erro ao buscar livros por gênero:', error);
-      throw new Error('Erro ao buscar livros por gênero');
-    }
-  }
+  getBooksByGenre: (genre: string): Promise<BookResponse[]> => 
+    apiRequest<BookResponse[]>(`/book/search/genre/${encodeURIComponent(genre)}`),
+
+  getBookById: (id: string): Promise<BookResponse> => 
+    apiRequest<BookResponse>(`/book/${id}`),
 };
 
 export const authorsApi = {
-  getAllAuthors: async (): Promise<AuthorResponse[]> => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/author`);
-      if (!response.ok) {
-        throw new Error(`Erro HTTP: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Erro ao buscar autores:', error);
-      throw new Error('Erro ao conectar com a API');
-    }
-  },
+  getAllAuthors: (): Promise<AuthorResponse[]> => 
+    apiRequest<AuthorResponse[]>('/author'),
 
-  searchByName: async (name: string): Promise<AuthorResponse[]> => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/author/name?name=${encodeURIComponent(name)}`);
-      if (!response.ok) {
-        throw new Error(`Erro HTTP: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Erro ao buscar autores por nome:', error);
-      throw new Error('Erro ao buscar autores por nome');
-    }
-  },
+  searchByName: (name: string): Promise<AuthorResponse[]> => 
+    apiRequest<AuthorResponse[]>(`/author/name?name=${encodeURIComponent(name)}`),
 
-  getByNationality: async (nationality: string): Promise<AuthorResponse[]> => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/author/nacionality?nacionality=${encodeURIComponent(nationality)}`);
-      if (!response.ok) {
-        throw new Error(`Erro HTTP: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Erro ao buscar autores por nacionalidade:', error);
-      throw new Error('Erro ao buscar autores por nacionalidade');
-    }
-  }
+  getByNationality: (nationality: string): Promise<AuthorResponse[]> => 
+    apiRequest<AuthorResponse[]>(`/author/nacionality?nacionality=${encodeURIComponent(nationality)}`),
+
+  getAuthorById: (id: string): Promise<AuthorResponse> => 
+    apiRequest<AuthorResponse>(`/author/${id}`),
 };
