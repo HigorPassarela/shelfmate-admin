@@ -1,30 +1,31 @@
-# Build stage
-FROM node:18-alpine AS builder
+FROM node:18-alpine
 
 WORKDIR /app
 
-# Copiar package.json e package-lock.json
+# Copy package files
 COPY package*.json ./
 
-# Instalar dependências
-RUN npm ci --only=production
+# Use npm install instead of npm ci to resolve dependencies automatically
+RUN npm install --production=false
 
-# Copiar código fonte
+# Copy source code
 COPY . .
 
-# Build da aplicação
+# Build the application
 RUN npm run build
 
-# Production stage
-FROM nginx:alpine
+# Show build results
+RUN echo "=== BUILD COMPLETED ===" && ls -la dist/
 
-# Copiar build para nginx
-COPY --from=builder /app/build /usr/share/nginx/html
+# Install serve
+RUN npm install -g serve
 
-# Configuração customizada do nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Create startup script
+RUN echo '#!/bin/sh' > start.sh && \
+    echo 'echo "Starting serve on port $PORT"' >> start.sh && \
+    echo 'serve -s dist -l $PORT --cors --single' >> start.sh && \
+    chmod +x start.sh
 
-# Expor porta
-EXPOSE 80
+EXPOSE 3000
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["./start.sh"]
